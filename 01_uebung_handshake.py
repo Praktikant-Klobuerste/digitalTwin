@@ -7,81 +7,50 @@ class Anlage(PlcModule):
         self.StartBand()
         self.ist_frei = 0
 
+
+    def handshake(self, order_number : int, module : str) -> None:
+        state = 0
+        while(True):
+            if state == 0 and self.ist_frei == 0:
+                if self.ReadOPCTag(module, "Ready"):
+                    self.WriteOPCTag(module, "Order", order_number)
+                    self.WriteOPCTag(module, "Start", 1)
+                    self.ist_frei = 1
+                    state = 1
+
+            elif state == 1:
+                if self.ReadOPCTag(module, "Acknowledge"):
+                    self.WriteOPCTag(module, "Start", 0)
+                    state = 2
+
+            elif state == 2:
+                if self.ReadOPCTag(module, "Acknowledge") == False:
+                    state = 3
+            elif state == 3:
+                if self.ReadOPCTag(module, "Busy") == False:
+                    state = 0
+                    self.ist_frei = 0
+                    break
+
+
     def bestellung(self, order_number : int) -> None:
-        state = 0
-        while(True):
-            if state == 0 and self.ist_frei == 0:
-                if self.ReadOPCTag("module1", "Ready"):
-                    self.WriteOPCTag("module1", "Order", order_number)
-                    self.WriteOPCTag("module1", "Start", 1)
-                    self.ist_frei = 1
-                    state = 1
+        modul = "module1"
+        self.handshake(order_number, modul)
 
-            elif state == 1:
-                if self.ReadOPCTag("module1", "Acknowledge"):
-                    self.WriteOPCTag("module1", "Start", 0)
-                    state = 2
 
-            elif state == 2:
-                if self.ReadOPCTag("module1", "Acknowledge") == False:
-                    state = 3
-            elif state == 3:
-                if self.ReadOPCTag("module1", "Busy") == False:
-                    state = 0
-                    self.ist_frei = 0
-                    break
+    def bauen(self, order_number : int) -> None:
+        modul = "module2"
+        self.handshake(order_number, modul)
 
-    def bauen(self, order_number : int):
-        state = 0
-        while(True):
-            if state == 0 and self.ist_frei == 0:
-                if self.ReadOPCTag("module2", "Ready"):
-                    self.WriteOPCTag("module2", "Order", order_number)
-                    self.WriteOPCTag("module2", "Start", 1)
-                    self.ist_frei = 1
-                    state = 1
 
-            elif state == 1:
-                if self.ReadOPCTag("module2", "Acknowledge"):
-                    self.WriteOPCTag("module2", "Start", 0)
-                    state = 2
+    def lager_1(self, order_number : int) -> None:
+        modul = "module3"
+        self.handshake(order_number, modul)
 
-            elif state == 2:
-                if self.ReadOPCTag("module2", "Acknowledge") == False:
-                    state = 3
-            elif state == 3:
-                if self.ReadOPCTag("module2", "Busy") == False:
-                    state = 0
-                    self.ist_frei = 0
-                    break
 
-    def lager(self, modulwahl, order_number : int):
-        
-        modul = f"module{modulwahl}"
-        print(modul)
-
-        state = 0
-        while(True):
-            if state == 0 and self.ist_frei == 0:
-                if self.ReadOPCTag(modul, "Ready"):
-                    self.WriteOPCTag(modul, "Order", order_number)
-                    self.WriteOPCTag(modul, "Start", 1)
-                    self.ist_frei = 1
-                    state = 1
-
-            elif state == 1:
-                if self.ReadOPCTag(modul, "Acknowledge"):
-                    self.WriteOPCTag(modul, "Start", 0)
-                    state = 2
-
-            elif state == 2:
-                if self.ReadOPCTag(modul, "Acknowledge") == False:
-                    state = 3
-            elif state == 3:
-                if self.ReadOPCTag(modul, "Busy") == False:
-                    state = 0
-                    self.ist_frei = 0
-                    break
+    def lager_2(self , order_number : int) -> None:
+        modul = "module3b"
+        self.handshake(order_number, modul)
 
 
 anlage = Anlage()
@@ -91,7 +60,7 @@ anlage = Anlage()
 def Fertigung(bestellung, bauen, lager):
     anlage.bestellung(order_number = bestellung)
     anlage.bauen(order_number = bauen)
-    anlage.lager(modulwahl="3b", order_number = lager)
+    anlage.lager_1(order_number = lager)
 
 
 for i in range(5):
