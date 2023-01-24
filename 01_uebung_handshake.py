@@ -1,21 +1,21 @@
 from twinLib2022_v22_12 import PlcModule, ErpConnect
-
+import random
 
 class Anlage(PlcModule):
     def __init__(self):
         super().__init__()
         self.StartBand()
-        self.ist_frei = 0
+        self.ist_frei = False
 
 
-    def handshake(self, order_number : int, module : str) -> None:
+    def handshake(self, order_number : int, module : str) -> bool:
         state = 0
         while(True):
-            if state == 0 and self.ist_frei == 0:
+            if state == 0 and self.ist_frei == False:
                 if self.ReadOPCTag(module, "Ready"):
                     self.WriteOPCTag(module, "Order", order_number)
                     self.WriteOPCTag(module, "Start", 1)
-                    self.ist_frei = 1
+                    self.ist_frei = True
                     state = 1
 
             elif state == 1:
@@ -29,45 +29,65 @@ class Anlage(PlcModule):
             elif state == 3:
                 if self.ReadOPCTag(module, "Busy") == False:
                     state = 0
-                    self.ist_frei = 0
+                    self.ist_frei = False
+            
                     break
+        return self.ist_frei
 
 
-    def bestellung(self, order_number : int) -> None:
+    def bestellung(self, order_number : int) -> bool:
         modul = "module1"
-        self.handshake(order_number, modul)
+        return self.handshake(order_number, modul)
 
 
-    def bauen(self, order_number : int) -> None:
+    def bauen(self, order_number : int) -> bool:
         modul = "module2"
-        self.handshake(order_number, modul)
+        return self.handshake(order_number, modul)
 
 
-    def lager_1(self, order_number : int) -> None:
+    def lager_1(self, order_number : int) -> bool:
         modul = "module3"
-        self.handshake(order_number, modul)
+        return self.handshake(order_number, modul)
 
 
-    def lager_2(self , order_number : int) -> None:
+    def lager_2(self , order_number : int) -> bool:
         modul = "module3b"
-        self.handshake(order_number, modul)
+        return self.handshake(order_number, modul)
 
 
 anlage = Anlage()
                 
 
     
-def Fertigung(bestellung, bauen, lager):
+def serielle_Fertigung(bestellung, bauen, lager):
     anlage.bestellung(order_number = bestellung)
     anlage.bauen(order_number = bauen)
     anlage.lager_1(order_number = lager)
 
 
-for i in range(5):
-    order_1 = int(input("Welche Bestellung?: "))
-    order_2 = int(input("Bauen: "))
-    order_3 = int(input("Lager:"))
+def redunante_Fertigung():
+    anlage.bestellung(1)
+    anlage.bauen(random.randint(1, 2))
+    anlage.lager_1(random.randint(1, 3))
+
+    anlage.bestellung(2)
+    anlage.bauen(random.randint(1, 2))
+    anlage.lager_2(random.randint(1, 3))
+
+
+def starre_Fertigung(bestellung, bauen, lager):
+    anlage.bestellung(order_number = bestellung)
+    anlage.bauen(order_number=bauen)
+    anlage.lager_1(order_number=lager)
+
+
+
+
+# for i in range(5):
+#     order_1 = int(input("Welche Bestellung?: "))
+#     order_2 = int(input("Bauen: "))
+#     order_3 = int(input("Lager:"))
     
-    Fertigung(order_1, order_2, order_3)
+#     serielle_Fertigung(order_1, order_2, order_3)
 
 
