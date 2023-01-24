@@ -5,15 +5,16 @@ class Anlage(PlcModule):
     def __init__(self):
         super().__init__()
         self.StartBand()
-        self.sub_state = 0
+        self.ist_frei = 0
 
     def bestellung(self, order_number : int) -> None:
         state = 0
         while(True):
-            if state == 0 and self.sub_state == 0:
+            if state == 0 and self.ist_frei == 0:
                 if self.ReadOPCTag("module1", "Ready"):
                     self.WriteOPCTag("module1", "Order", order_number)
                     self.WriteOPCTag("module1", "Start", 1)
+                    self.ist_frei = 1
                     state = 1
 
             elif state == 1:
@@ -27,16 +28,17 @@ class Anlage(PlcModule):
             elif state == 3:
                 if self.ReadOPCTag("module1", "Busy") == False:
                     state = 0
-                    self.sub_state = 1
+                    self.ist_frei = 0
                     break
 
     def bauen(self, order_number : int):
         state = 0
         while(True):
-            if state == 0 and self.sub_state == 1:
+            if state == 0 and self.ist_frei == 0:
                 if self.ReadOPCTag("module2", "Ready"):
                     self.WriteOPCTag("module2", "Order", order_number)
                     self.WriteOPCTag("module2", "Start", 1)
+                    self.ist_frei = 1
                     state = 1
 
             elif state == 1:
@@ -50,7 +52,7 @@ class Anlage(PlcModule):
             elif state == 3:
                 if self.ReadOPCTag("module2", "Busy") == False:
                     state = 0
-                    self.sub_state = 2
+                    self.ist_frei = 0
                     break
 
     def lager(self, modulwahl, order_number : int):
@@ -60,10 +62,11 @@ class Anlage(PlcModule):
 
         state = 0
         while(True):
-            if state == 0 and self.sub_state == 2:
+            if state == 0 and self.ist_frei == 0:
                 if self.ReadOPCTag(modul, "Ready"):
                     self.WriteOPCTag(modul, "Order", order_number)
                     self.WriteOPCTag(modul, "Start", 1)
+                    self.ist_frei = 1
                     state = 1
 
             elif state == 1:
@@ -77,7 +80,7 @@ class Anlage(PlcModule):
             elif state == 3:
                 if self.ReadOPCTag(modul, "Busy") == False:
                     state = 0
-                    self.sub_state = 0
+                    self.ist_frei = 0
                     break
 
 
