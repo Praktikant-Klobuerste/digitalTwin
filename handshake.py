@@ -53,21 +53,17 @@ class Anlage(PlcModule):
         self.handshake(order_number, modul)
 
 
-anlage = Anlage()
-                
+    def Fertigung(self, bestellung, bauen, lager):
+        try:
+            bestellung = int(bestellung)
+            bauen = int(bauen)
+            lager = int(lager)
 
-    
-def Fertigung(bestellung, bauen, lager):
-    anlage.bestellung(order_number = bestellung)
-    anlage.bauen(order_number = bauen)
-    anlage.lager_1(order_number = lager)
-
-
-for i in range(5):
-    order_1 = int(input("Welche Bestellung?: "))
-    order_2 = int(input("Bauen: "))
-    order_3 = int(input("Lager:"))
-    
-    Fertigung(order_1, order_2, order_3)
-
-
+            if bestellung > 2 or bauen > 2 or lager > 3:
+                raise ValueError
+        except ValueError:
+            print("Not Possible to build")
+        else:    
+            self.bestellung(order_number = bestellung)
+            self.bauen(order_number = bauen)
+            self.lager_1(order_number = lager)
