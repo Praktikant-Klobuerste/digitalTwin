@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html class="h-100">
+  <head>
+    <title>Login</title>
+    <link rel="stylesheet" href="static/assets/style.css" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;900&family=Ubuntu&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <!-- Own Cssfile -->
+    <link rel="stylesheet" href="static/assets/css/styles.css" />
+    <!-- Bootstrap Scripts -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body class="d-flex h-100 text-center">
+    <div class="d-flex w-100 h-100 p-3 mx-auto flex-column mx-auto">
+      <header class="mb-auto"></header>
+
+      <!-- main -->
+      <main class="m-auto">
+        <div class="container">
+          <div class="row">
+            <h1>Login</h1>
+          </div>
+          <form method="POST" action="{{ url_for('login') }}">
+            {{ form.csrf_token }}
+            <div class="row">
+              <p>
+                {{ form.email.label(class="form-label") }} 
+                {{ form.email(size=30) }} 
+                {% for error in form.email.errors %}
+                <br />
+                <span>{{error}}</span>
+                {%endfor%}
+              </p>
+            </div>
+
+            <div class="row">
+              <p>
+                {{ form.password.label(class="form-label") }} {{
+                form.password(size=30) }} 
+                {% for error in form.password.errors %}
+                <br />
+                <span>{{error}}</span>
+                {%endfor%}
+              </p>
+            </div>
+            <div class="row">
+              {{ form.submit(class="btn btn-dark")}}
+            </div>
+          </form>
+        </div>
+      </main>
+
+      <footer class="mt-auto"></footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+.title {
+    padding: 20px;
+    margin: 50px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background-color: #FFFBF5;
+}
+
+.form-label{
+    display: block;
+    width: 80px;
+    margin: auto;
+    padding: 5px;
+}

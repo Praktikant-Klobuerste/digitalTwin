@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+{{title}}
+{% endblock %}
+
+{% block content %}
+
+    <div class="title">
+    <h1>{{title}}</h1>
+</div>
+<main>
+    
+    <p>Lorem ipsum dolor 
+        sit amet consectetur adipisicing elit. Hic consequuntur aspernatur, facilis, 
+        vitae qui laborum eaque, beatae in nulla dolor debitis pariatur corporis? Magni, laborum. 
+        Molestiae dolor obcaecati necessitatibus laudantium.</p>
+        <a class="btn btn-warning btn-lg" 
+     href="{{ url_for('bauen') }}" role="button">Zeigs Mir!</a>
+    </main>
+    
+    <footer>
+
+    </footer>
+
+{% endblock %}
