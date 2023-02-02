@@ -8,9 +8,13 @@
 {% block content %}
 
 <h1>Bauen</h1>
-{{ form.csrf_token }}
-{{ form.deckel(class="form-label")}} 
-{{ form.mitte(class="form-label") }} 
-{{ form.boden(class="form-label")}} 
-{{ form.submit(class="form-label")}}
+<div class = form>
+    <form method="POST" action="{{ url_for('bauen') }}">
+        {{ form.csrf_token }}
+        {{ form.deckel(class="form-selector")}} 
+        {{ form.mitte(class="form-selector") }} 
+        {{ form.boden(class="form-selector")}} 
+        {{ form.submit(class="form-selector")}}
+    </form>
+</div>
 {% endblock %}

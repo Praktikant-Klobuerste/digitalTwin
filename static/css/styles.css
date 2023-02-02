@@ -9,7 +9,13 @@ body{
     background-color: #FFFBF5;
 }
 
-.form-label{
+.form{
+    display: block;
+    width: 160px;
+    margin: auto;
+}
+
+.form-selector{
     display: block;
     width: 80px;
     margin: auto;
