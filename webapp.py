@@ -5,6 +5,7 @@ from wtforms import StringField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Length, URL
 import json
 from datetime import datetime
+import uuid
 
 
 
@@ -18,7 +19,7 @@ class TurmForm(FlaskForm):
     deckel = SelectField("Welche Farbe soll der Deckel haben?", choices=[("rot","🔴"), ("schwarz","⚫")])
     mitte = SelectField("Welche Farbe soll die Mitte Haben?", choices=[("blau","🔵"),("rot","🔴"), ("schwarz","⚫")])
     boden = SelectField("Welche Farbe soll der Boden haben?", choices=[("blau","🔵"),("rot","🔴")])
-    submit = SubmitField("Submit")
+    submit = SubmitField("Herstellen")
 
 
 class TurmSammlung():
@@ -54,7 +55,8 @@ def save_turm_json(turm):
             "datum": datetime.now().strftime("%d.%m.%Y"),
             "komplett": datetime.now().strftime("%c"),
             "timestamp" : datetime.now().strftime("%X")
-        }
+        },
+        "uuid": str(uuid.uuid1())
     }
 
 
@@ -74,8 +76,19 @@ def save_turm_json(turm):
         with open("./bestellung.json", "w") as file:
             data.append(new_data)
             file.write(json.dumps(data, indent=4))
+            return data
 
 
+def get_türme_json():
+    try:
+        with open("./bestellung.json", "r") as file:
+            return json.load(file)
+
+    except FileNotFoundError:
+            return
+
+    except ValueError:
+            return
 
 
 
@@ -88,6 +101,7 @@ def index():
 @app.route("/bauen", methods = ["GET", "POST"])
 def bauen():
     form = TurmForm()
+    türme = get_türme_json()
     # if request.method == "POST":
     if form.validate_on_submit():
         turm = Turm(form.deckel.data, form.mitte.data, form.boden.data)
@@ -98,7 +112,7 @@ def bauen():
         # print(sammlung)
 
         # return redirect(url_for("index"))
-    return render_template("bauen.html", title= "Bauen", form = form)
+    return render_template("bauen.html", title= "Bauen", form = form, türme = türme)
 
 
 

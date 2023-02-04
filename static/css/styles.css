@@ -21,3 +21,14 @@ body{
     margin: auto;
     padding: 5px;
 }
+
+.form-btn{
+    margin-top: 1rem;
+}
+
+
+.turm{
+    display: block;
+    width: 300px;
+    margin: auto;
+}
