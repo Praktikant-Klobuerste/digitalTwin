@@ -15,22 +15,30 @@
         {{ form.mitte(class="form-select form-selector") }} 
         {{ form.boden(class="form-select form-selector")}} 
         {{ form.submit(class="btn btn-outline-dark form-btn")}}
+
+        <button class="btn btn-light form-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">🎈</button>
     </form>
 </div>
 
-
-
-<button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Enable body scrolling</button>
-
 <div class="offcanvas offcanvas-start text-bg-dark" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
-  <div class="offcanvas-header">
-    <h3 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Turmübersicht</h2>
-    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <div class="offcanvas-header">
+      <h3 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Turmübersicht - #{{türme_anzahl}}</h3>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      {%if türme%}
+      <a href="{{ url_for('delete_orderlist', id='all') }}">
+          <button class="btn btn-delete" type="button">
+              ❌ Bestellungen löschen
+          </button>
+      </a>
+      {%endif%}
+      <p>Try scrolling the rest of the page to see this option in action.</p>
+    </div>
   </div>
-  <div class="offcanvas-body">
-    <p>Try scrolling the rest of the page to see this option in action.</p>
-  </div>
-</div>
+
+
+
 
 
 {%if türme%}

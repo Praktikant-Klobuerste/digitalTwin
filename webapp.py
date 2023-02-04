@@ -22,6 +22,7 @@ class TurmForm(FlaskForm):
     submit = SubmitField("Herstellen")
 
 
+
 class TurmSammlung():
     def __init__(self, *türme) -> None:
         self.türme = türme
@@ -111,8 +112,21 @@ def bauen():
 
         # print(sammlung)
 
-        # return redirect(url_for("index"))
-    return render_template("bauen.html", title= "Bauen", form = form, türme = türme)
+        # return redirect(url_for("bauen"))
+    return render_template("bauen.html", title= "Bauen", form = form, türme = türme, türme_anzahl=len(türme))
+
+
+@app.route("/delete")
+def delete_orderlist():
+    turm_id = request.args.get("id")
+    print(turm_id)
+    if turm_id == "all":
+        with open("./bestellung.json", "w") as file:
+                file.write("[]")
+
+
+
+    return redirect(url_for('bauen'))
 
 
 
