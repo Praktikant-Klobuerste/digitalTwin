@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Length, URL
+import json
+from datetime import datetime
 
 
 
@@ -33,9 +35,45 @@ class Turm():
         self.deckel = deckel
         self.mitte = mitte
         self.boden = boden
+        self.description = self.__repr__()
 
     def __repr__(self):
         return f"<Turm({self.deckel}, {self.mitte}, {self.boden})>"
+
+
+def save_turm_json(turm):
+    new_data = {
+        "Turm": {
+            "deckel" : turm.deckel,
+            "mitte" : turm.mitte,
+            "boden" : turm.boden,
+            "beschreibung" : turm.description
+        },
+        "Zeit": {
+            "tag" : datetime.now().strftime("%A"),
+            "datum": datetime.now().strftime("%d.%m.%Y"),
+            "komplett": datetime.now().strftime("%c"),
+            "timestamp" : datetime.now().strftime("%X")
+        }
+    }
+
+
+    try:
+        with open("./bestellung.json", "r") as file:
+            data = json.load(file)
+        
+    except FileNotFoundError:
+        with open("./bestellung.json", "w") as file:
+            file.write(json.dumps([new_data], indent=4))
+
+    except ValueError:
+        with open("./bestellung.json", "w") as file:
+            file.write(json.dumps([new_data], indent=4))
+
+    else:
+        with open("./bestellung.json", "w") as file:
+            data.append(new_data)
+            file.write(json.dumps(data, indent=4))
 
 
 
@@ -45,19 +83,19 @@ class Turm():
 def index():
     return render_template("index.html", title= title)
 
+
+
 @app.route("/bauen", methods = ["GET", "POST"])
 def bauen():
     form = TurmForm()
     # if request.method == "POST":
     if form.validate_on_submit():
-        # print(form.deckel.data)
-        # print(form.mitte.data)
-        # print(form.boden.data)
         turm = Turm(form.deckel.data, form.mitte.data, form.boden.data)
         print(turm)
+        save_turm_json(turm)
         sammlung.append(turm)
 
-        print(sammlung)
+        # print(sammlung)
 
         # return redirect(url_for("index"))
     return render_template("bauen.html", title= "Bauen", form = form)
