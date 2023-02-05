@@ -109,6 +109,11 @@ def bauen():
     form = TurmForm()
     türme = get_türme_json()
     # if request.method == "POST":
+    try: 
+        türme_anzahl = len(türme)
+    except TypeError:
+        türme_anzahl = None
+
     if form.validate_on_submit():
         turm = Turm(form.deckel.data, form.mitte.data, form.boden.data)
         print(turm)
@@ -118,7 +123,7 @@ def bauen():
         # print(sammlung)
 
         # return redirect(url_for("bauen"))
-    return render_template("bauen.html", title= "Bauen", form = form, türme = türme, türme_anzahl=len(türme))
+    return render_template("bauen.html", title= "Bauen", form = form, türme = türme, türme_anzahl=türme_anzahl)
 
 
 @app.route("/delete")

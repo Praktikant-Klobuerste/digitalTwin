@@ -26,9 +26,12 @@ body{
 
   .top {
     clip-path: polygon(0% 0%, 100% 0%, 100% 48%, 0% 58%);
-  }
-  
-  .bottom {
+    cursor: pointer;
+}
+
+.bottom:hover {
+    cursor: pointer;
+    transition: ease-in 0.3s;
     clip-path: polygon(0% 60%, 100% 50%, 100% 100%, 0% 100%);
     color: transparent;
     background: -webkit-linear-gradient(177deg, black 42%, var(--text-color) 63%);
