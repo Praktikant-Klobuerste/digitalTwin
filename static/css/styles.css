@@ -1,12 +1,59 @@
-body{
-    background-color: #FFFBF5;
+:root {
+    --background-color: #222831;
+    --text-color: #EEEEEE;
 }
+
+body{
+    background-color: var(--background-color);
+}
+
+
+/* Title */
+.wrapper {
+    display: grid;
+    place-content: center;
+    min-height: 25vh;
+    font-family: "Oswald", sans-serif;
+    font-size: clamp(.4rem, 5rem + 2vw, 7rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-color);
+  }
+  
+  .wrapper > div {
+    grid-area: 1/1/-1/-1;
+  }
+
+  .top {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 48%, 0% 58%);
+  }
+  
+  .bottom {
+    clip-path: polygon(0% 60%, 100% 50%, 100% 100%, 0% 100%);
+    color: transparent;
+    background: -webkit-linear-gradient(177deg, black 42%, var(--text-color) 63%);
+    background: linear-gradient(177deg, black 42%, var(--text-color) 63%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    transform: translateX(-0.025em);
+  }
+
+/* End Title */
+  
 
 .form{
     display: block;
-    width: 200px;
+    width: 210px;
     margin: auto;
+    margin-bottom: 40px;
+    padding: 20px 10px 10px 10px;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 1px;
+    border-color: #00000033;
+    background-color: #EEEEEE;
 }
+
 
 .form-selector{
     display: block;
@@ -65,3 +112,38 @@ body{
 .accordion-btn{
     margin-top: 5px;
 }
+
+.btn-delete-item{
+    background-color: None;
+    width: 40px;
+    border: none;
+    /* border-width: 1px;
+    border-color: beige; */
+    padding: 10px 10px;
+    border-radius: 5px;
+    box-shadow: inset 0 0 0 0 rgb(141, 0, 141);
+    transition: ease-in 0.2s;
+    outline: none;
+}
+
+.btn-delete-item:hover{
+    border: None;
+    border-radius: 5px;
+    cursor: pointer;
+    transform: rotate(-90deg);
+    /* filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(184deg) brightness(108%) contrast(102%); */
+    box-shadow: inset 0 40px 0 0 rgb(141, 0, 141);
+}
+
+
+.btn-delete-item img{
+ width: 15px;
+}
+
+/* .btn-delete-item img:hover{
+ filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(184deg) brightness(108%) contrast(102%);
+} */
+
+/* .btn-delete-item img:nth-child(1){
+    
+} */

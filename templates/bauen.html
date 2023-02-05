@@ -7,8 +7,13 @@
 
 {% block content %}
 
-<h1>Bauen</h1>
-<div class = form>
+<section class="wrapper">
+  <div class = "top">Bauen</div>
+  <div class = "bottom" aria-hidden="true">Bauen</div>
+</section>
+
+
+<div class = "form">
     <form method="POST" action="{{ url_for('bauen') }}">
         {{ form.csrf_token }}
         {{ form.deckel(class="form-select form-selector")}}
@@ -26,7 +31,7 @@
 <!-- offcanvas -->
 <div class="offcanvas offcanvas-start text-bg-dark" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
     <div class="offcanvas-header">
-      <h3 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Turmübersicht - #{{türme_anzahl}}</h3>
+      <h3 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Turmübersicht - #️⃣{{türme_anzahl}}</h3>
       <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
@@ -99,7 +104,9 @@
               </div>
               <div class = "col-2 accordion-btn">
                 <a href="{{ url_for('delete_orderlist', id=turm['uuid']) }}">
-                  <button type="button" class="btn btn-outline-danger">❌</button>
+                  <button type="button" class="btn-delete-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="🗑️">
+                    <img src="https://uxwing.com/wp-content/themes/uxwing/download/checkmark-cross/cross-icon.png" alt="">
+                  </button>
                 </a>
               </div>
             </div>
