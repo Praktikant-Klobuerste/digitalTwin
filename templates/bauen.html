@@ -14,9 +14,12 @@
         {{ form.deckel(class="form-select form-selector")}}
         {{ form.mitte(class="form-select form-selector") }} 
         {{ form.boden(class="form-select form-selector")}} 
-        {{ form.submit(class="btn btn-outline-dark form-btn")}}
+
+        <div class="form-btn">
+        {{ form.submit(class="btn btn-outline-dark")}}
         
-        <button class="btn btn-light form-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">🎈</button>
+        <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">🎈</button>
+    </div>
     </form>
 </div>
 
@@ -37,16 +40,18 @@
 
 
       </a>
+      <div class="canvas-turm-container">
       <ol>
       {%for turm in türme%}
-        <li>{{turm["uuid"]}}</li>
+        <li class = canvas-turm-element>{{turm["uuid"]}}</li>
       {%endfor%}
     </ol>
+  </div>
 
 
       {%else%}
       <p>Erstelle deine ersten Türme!</p>
-      <img src="https://media.tenor.com/GOCugOUcQecAAAAd/cool-dog.gif" width="833" height="1041.25" alt="Cool Dog GIF - Cool Dog GIFs" style="max-width: 200px; max-height: 250;">
+      <img src="https://media.tenor.com/GOCugOUcQecAAAAd/cool-dog.gif" width="833" height="1041.25" alt="Cool Dog GIF - Cool Dog GIFs" style="max-width: 300; max-height: 375;">
       {%endif%}
 
     </div>
@@ -76,7 +81,7 @@
   </div>
 
 
-
+<!-- Türme Accordion -->
 {%if türme%}
     {%for turm in türme%}
     <div class="accordion turm">
@@ -88,7 +93,15 @@
         </h2>
         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
             <div class="accordion-body">
-            <strong>{{turm["uuid"]}}.</strong>
+            <div class="accordion-collapse-header">
+              <div class = accordion-uuid>
+                <strong>{{turm["uuid"]}}</strong>
+              </div>  
+              <a href="{{ url_for('delete_orderlist', id=turm['uuid']) }}">
+                <button type="button" class="btn btn-delete">❌</button>
+              </a>
+            </div>
+            <ul>
             <li>
                 {{turm["Zeit"]["tag"]}}
             </li>
@@ -98,6 +111,7 @@
             <li>
                 {{turm["Zeit"]["timestamp"]}}
             </li>
+          </ul>
             </div>
         </div>
         </div>

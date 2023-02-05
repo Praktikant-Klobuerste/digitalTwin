@@ -92,6 +92,11 @@ def get_türme_json():
             return
 
 
+def find(lst, key, value):
+    for i, dic in enumerate(lst):
+        if dic[key] == value:
+            return i
+    return -1
 
 @app.route("/")
 def index():
@@ -122,7 +127,18 @@ def delete_orderlist():
     print(turm_id)
     if turm_id == "all":
         with open("./bestellung.json", "w") as file:
-                file.write("[]")
+            file.write("[]")
+
+    else:
+        with open("./bestellung.json", "r") as file:
+            data = json.load(file)
+        turm_index = find(data, "uuid", turm_id)
+        data.pop(turm_index)
+
+        with open("./bestellung.json", "w") as file:
+            file.write(json.dumps(data, indent=4))
+
+            
 
 
 

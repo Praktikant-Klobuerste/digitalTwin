@@ -4,12 +4,13 @@ body{
 
 .form{
     display: block;
-    width: 160px;
+    width: 200px;
     margin: auto;
 }
 
 .form-selector{
     display: block;
+    width: 160px;
     margin: auto;
     padding: 5px;
 }
@@ -39,6 +40,9 @@ body{
   }
 
 .form-btn{
+    display: block;
+    margin: auto;
+    width: 160px;
     margin-top: 1rem;
 }
 
@@ -47,4 +51,21 @@ body{
     display: block;
     width: 300px;
     margin: auto;
+}
+
+.canvas-turm-container{
+    margin: 2rem 0;
+}
+
+.canvas-turm-element{
+    font-size: medium;
+    margin: .5rem 0;
+}
+
+.accordion-collapse-header{
+display: inline;
+}
+
+.accordion-uuid{
+    width: 170px;
 }
