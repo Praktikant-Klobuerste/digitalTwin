@@ -62,10 +62,6 @@ body{
     margin: .5rem 0;
 }
 
-.accordion-collapse-header{
-display: inline;
-}
-
-.accordion-uuid{
-    width: 170px;
+.accordion-btn{
+    margin-top: 5px;
 }

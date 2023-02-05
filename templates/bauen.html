@@ -93,13 +93,15 @@
         </h2>
         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
             <div class="accordion-body">
-            <div class="accordion-collapse-header">
-              <div class = accordion-uuid>
+            <div class="container row">
+              <div class ="col-10">
                 <strong>{{turm["uuid"]}}</strong>
-              </div>  
-              <a href="{{ url_for('delete_orderlist', id=turm['uuid']) }}">
-                <button type="button" class="btn btn-delete">❌</button>
-              </a>
+              </div>
+              <div class = "col-2 accordion-btn">
+                <a href="{{ url_for('delete_orderlist', id=turm['uuid']) }}">
+                  <button type="button" class="btn btn-outline-danger">❌</button>
+                </a>
+              </div>
             </div>
             <ul>
             <li>
