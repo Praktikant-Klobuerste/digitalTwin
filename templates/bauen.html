@@ -41,8 +41,9 @@
       <button type="button" class="btn btn-delete" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             ❌ Bestellungen löschen
         </button>
-      </button>
-
+        <a href="{{ url_for('create_csv') }}">
+          <button type="button" class="btn btn-create-csv">Convert to CSV</button>
+        </a>
 
       </a>
       <div class="canvas-turm-container">
@@ -62,7 +63,7 @@
     </div>
   </div>
 
-<!-- Modal -->
+<!-- Modal Bestellungen löschen-->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">

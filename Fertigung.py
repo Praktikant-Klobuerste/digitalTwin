@@ -10,7 +10,7 @@ def convert(x):
     return _liste
 
 try:
-    with open("./digitalTwin/bestellung.csv", "r") as file:
+    with open("./bestellung.csv", "r") as file:
 
         bestellung = [i.strip() for i in file.readlines()]
         bestellung.pop(0) # Spalten Überschrift entfernt

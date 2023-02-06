@@ -16,10 +16,10 @@ title = "Modelfabrik 🎈"
 sammlung = []
 
 class TurmForm(FlaskForm):
-    deckel = SelectField("Welche Farbe soll der Deckel haben?", choices=[("rot","🔴"), ("schwarz","⚫")])
-    mitte = SelectField("Welche Farbe soll die Mitte Haben?", choices=[("blau","🔵"),("rot","🔴"), ("schwarz","⚫")])
+    deckel = SelectField("Welche Farbe soll der Deckel haben?", choices=[("blau","🔵"),("rot","🔴"), ("schwarz","⚫")])
+    mitte = SelectField("Welche Farbe soll die Mitte Haben?", choices=[("rot","🔴"), ("schwarz","⚫")])
     boden = SelectField("Welche Farbe soll der Boden haben?", choices=[("blau","🔵"),("rot","🔴")])
-    submit = SubmitField("Herstellen")
+    submit = SubmitField("Bestellen")
 
 
 
@@ -29,7 +29,6 @@ class TurmSammlung():
 
     def __str__(self):
         return f"Eine Sammlung von {len(self.türme)}Türmen"
-
 
 
 class Turm():
@@ -122,7 +121,7 @@ def bauen():
 
         # print(sammlung)
 
-        # return redirect(url_for("bauen"))
+        return redirect(url_for("bauen"))
     return render_template("bauen.html", title= "Bauen", form = form, türme = türme, türme_anzahl=türme_anzahl)
 
 
@@ -143,9 +142,42 @@ def delete_orderlist():
         with open("./bestellung.json", "w") as file:
             file.write(json.dumps(data, indent=4))
 
+    return redirect(url_for('bauen'))
+
+
+@app.route("/csv")
+def create_csv():
+    with open("./bestellung.json", "r") as file:
+        türme = json.load(file)
+
+    with open("./bestellung.csv", "w") as file:
+        file.write("Modul1;Modul2;Modul3\n")
+
+        for turm in türme:
+            turm = turm["Turm"]
+
+            if turm["boden"] == "blau":
+                file.write("1;")
+            else:
+                file.write("2;")
+
+            if turm["mitte"] == "rot":
+                file.write("1;")
+            else:
+                file.write("2;")
             
+            if turm["deckel"] == "schwarz":
+                file.write("1\n")
+            elif turm["deckel"] == "blau":
+                file.write("2\n")
+            else:
+                file.write("3\n")
+
+    with open("./bestellung.json", "w") as file:
+            file.write("[]")
 
 
+            
 
     return redirect(url_for('bauen'))
 
